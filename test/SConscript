@@ -1,0 +1,42 @@
+# -*- coding: utf-8 -*-
+# vim: set filetype=python : #
+import os
+from itertools import izip
+from subprocess import call
+
+Import('env_test', 'obj_src', 'obj_unity')
+
+
+def runner_generator(env, src_runner):
+    for runner in src_runner:
+        str_runner = runner.name
+        file_dir = runner.dir.abspath
+        str_test_file = os.path.join(
+            file_dir, "{}.c".format(str_runner.split('_')[0]))
+        str_program = str_runner.split('.')[0]
+        yield (str_program, runner, env.File(str_test_file))
+
+
+def build_function(target, source, env):
+    script_dir = env['UNITYHELPDIR'].replace('#.', Dir('#').abspath)
+    script_name = 'generate_test_runner.rb'
+    script_path = os.path.join(script_dir, script_name)
+    for target_f, src_f in izip(target, source):
+        runner_f = target_f.abspath
+        call(['ruby', script_path, src_f.abspath, runner_f])
+    return None
+
+bld = Builder(action = build_function,
+              suffix = '_Runner.c',
+              src_suffix = '.c'
+              )
+env_test['BUILDERS']['Runner'] = bld
+test_sources = [source for source in Glob('*.c')
+               if not (source.name).endswith('_Runner.c')]
+test_runner_sources = [env_test.File((source.name).replace('.c','_Runner.c'))
+                                for source in test_sources]
+runners = env_test.Runner(target = test_runner_sources, source = test_sources)
+test_runners = [env_test.Program(
+    program, [runner, test_file, obj_unity, obj_src]) for
+    program, runner, test_file in runner_generator(env_test, runners)]
+Return('test_runners')
