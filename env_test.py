@@ -5,6 +5,7 @@ Repository(['#./vendor/ceedling/vendor/unity/src'])
 
 CCCOM = '$CC -c $_CCCOMCOM $SOURCE -o $TARGET '
 CPPPATH = ['#./vendor/ceedling/vendor/unity/src', '#./include']
+CPPFLAGS = ['-std=c99', '-pedantic', '-Wall']
 UNITYHELPDIR = '#./vendor/ceedling/vendor/unity/auto'
 
 env_test = Environment()
@@ -15,4 +16,5 @@ env_test.Append(
 env_test.Replace(
     CCCOM=CCCOM,
     CPPPATH=CPPPATH,
+    CPPFLAGS=CPPFLAGS,
 )

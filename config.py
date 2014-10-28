@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # Main configuration file for building the project
-MAIN_FILE = 'Blink.cpp'
+MAIN_FILE = 'spectrometer.cpp'
 ARDUINO_PORT = 'ttyACM0'
 AR_DIR = '/home/karolis/programs/arduino-1.5.8/hardware/'
 
