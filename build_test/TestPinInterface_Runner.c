@@ -33,6 +33,8 @@ extern void test_all_pins_are_low_by_default(void);
 extern void test_can_set_individual_pin_modes(void);
 extern void test_can_set_individual_pin_states(void);
 extern void test_can_set_several_pin_modes(void);
+extern void test_able_to_reset_pin_hit_count(void);
+extern void test_able_to_check_pin_hit_count(void);
 
 
 //=======Test Reset Option=====
@@ -52,6 +54,8 @@ int main(void)
   RUN_TEST(test_can_set_individual_pin_modes, 40);
   RUN_TEST(test_can_set_individual_pin_states, 46);
   RUN_TEST(test_can_set_several_pin_modes, 53);
+  RUN_TEST(test_able_to_reset_pin_hit_count, 63);
+  RUN_TEST(test_able_to_check_pin_hit_count, 73);
 
   return (UnityEnd());
 }

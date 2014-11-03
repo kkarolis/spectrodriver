@@ -8,6 +8,7 @@ vendor/ceedling/*
 !vendor/ceedling/vendor/
 vendor/ceedling/vendor/*
 !vendor/ceedling/vendor/unity/
+*_Runner*
 
 # Created by https://www.gitignore.io
 ### Python ###

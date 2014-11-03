@@ -15,25 +15,15 @@
  *
  * =====================================================================================
  */
-#ifndef  FAKEARDUINO_INC
-#define  FAKEARDUINO_INC
-
+#ifndef  SPECTROMETER_INC
+#define  SPECTROMETER_INC
+#include "Stepper.h"
 #include <stdint.h>
 
-#define OUT 1
-#define IN 0
-#define HIGH 1 
-#define LOW 0
-#define PIN_COUNT 64
+// Command width in bits should be less than 32
+#define CMD_WIDTH 8
 
-void pinMode(uint32_t pin, uint32_t mode);
-void digitalWrite(uint32_t pin, uint32_t value);
-uint32_t get_pinMode(uint32_t pin);
-uint32_t get_pinState(uint32_t pin);
-uint64_t modes(void);
-uint64_t states(void);
-void delayMicroseconds(uint32_t);
-void reset_pin_hits(void);
-uint32_t pin_hits(uint32_t pin);
+void Spectrometer_init(void);
+uint32_t Spectrometer_parse(uint32_t cmd);
 
-#endif   /* ----- #ifndef FAKEARDUINO_INC  ----- */
+#endif   /* ----- #ifndef SPECTROMETER_INC  ----- */

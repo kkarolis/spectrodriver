@@ -59,3 +59,26 @@ void test_can_set_several_pin_modes(void)
         TEST_ASSERT_TRUE(get_pinMode(13) == OUT);
         TEST_ASSERT_TRUE(get_pinMode(1) == IN);
 }
+
+void test_able_to_reset_pin_hit_count(void)
+{
+        uint32_t pin = 13;
+        pinMode(pin, OUT);
+        digitalWrite(pin, HIGH);
+        digitalWrite(pin, LOW);
+        reset_pin_hits();
+        TEST_ASSERT_TRUE(pin_hits(pin) == 0);
+}
+
+void test_able_to_check_pin_hit_count(void)
+{
+        uint32_t pin = 13;
+        pinMode(pin, OUT);
+        reset_pin_hits();
+        digitalWrite(pin, HIGH);
+        digitalWrite(pin, LOW);
+        digitalWrite(pin, HIGH);
+        digitalWrite(pin, LOW);
+        uint32_t hits = pin_hits(pin);
+        TEST_ASSERT_EQUAL(2, hits);
+}

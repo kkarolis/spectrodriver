@@ -15,25 +15,24 @@
  *
  * =====================================================================================
  */
-#ifndef  FAKEARDUINO_INC
-#define  FAKEARDUINO_INC
 
+#ifndef  SHUTTER_INC
+#define  SHUTTER_INC
+
+#ifdef  TEST
+#include "FakeArduino.h"
+#else      /* -----  not TEST  ----- */
+#include "Arduino.h"
+#endif     /* -----  not TEST  ----- */
 #include <stdint.h>
+#define SHUTTER 22
 
-#define OUT 1
-#define IN 0
-#define HIGH 1 
-#define LOW 0
-#define PIN_COUNT 64
+void Shutter_init(void);
+void Shutter_open(void);
+void Shutter_close(void);
+void Shutter_toggle(void);
+void Shutter_bound_left(void);
+void Shutter_bound_right(void);
+void Shutter_bound_reset(void);
 
-void pinMode(uint32_t pin, uint32_t mode);
-void digitalWrite(uint32_t pin, uint32_t value);
-uint32_t get_pinMode(uint32_t pin);
-uint32_t get_pinState(uint32_t pin);
-uint64_t modes(void);
-uint64_t states(void);
-void delayMicroseconds(uint32_t);
-void reset_pin_hits(void);
-uint32_t pin_hits(uint32_t pin);
-
-#endif   /* ----- #ifndef FAKEARDUINO_INC  ----- */
+#endif   /* ----- #ifndef SHUTTER_INC  ----- */
