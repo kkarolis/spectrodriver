@@ -35,6 +35,8 @@ extern void test_can_set_individual_pin_states(void);
 extern void test_can_set_several_pin_modes(void);
 extern void test_able_to_reset_pin_hit_count(void);
 extern void test_able_to_check_pin_hit_count(void);
+extern void test_able_to_check_pin_toggles(void);
+extern void test_able_to_reset_pin_toggles(void);
 
 
 //=======Test Reset Option=====
@@ -49,13 +51,15 @@ void resetTest()
 int main(void)
 {
   UnityBegin("/home/karolis/my_files/projects/vu_work/spectrometer_driver/test/TestPinInterface.c");
-  RUN_TEST(test_all_pins_are_input_by_default, 31);
-  RUN_TEST(test_all_pins_are_low_by_default, 35);
-  RUN_TEST(test_can_set_individual_pin_modes, 40);
-  RUN_TEST(test_can_set_individual_pin_states, 46);
-  RUN_TEST(test_can_set_several_pin_modes, 53);
-  RUN_TEST(test_able_to_reset_pin_hit_count, 63);
-  RUN_TEST(test_able_to_check_pin_hit_count, 73);
+  RUN_TEST(test_all_pins_are_input_by_default, 33);
+  RUN_TEST(test_all_pins_are_low_by_default, 37);
+  RUN_TEST(test_can_set_individual_pin_modes, 42);
+  RUN_TEST(test_can_set_individual_pin_states, 48);
+  RUN_TEST(test_can_set_several_pin_modes, 55);
+  RUN_TEST(test_able_to_reset_pin_hit_count, 65);
+  RUN_TEST(test_able_to_check_pin_hit_count, 75);
+  RUN_TEST(test_able_to_check_pin_toggles, 88);
+  RUN_TEST(test_able_to_reset_pin_toggles, 100);
 
   return (UnityEnd());
 }

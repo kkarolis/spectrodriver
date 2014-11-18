@@ -24,6 +24,7 @@
 static uint64_t pin_modes = 0x00000000;
 static uint64_t pin_states = 0x00000000;
 static uint64_t hits[PIN_COUNT] = {0};
+static uint64_t toggles[PIN_COUNT] = {0};
 
 static void set_bit(uint64_t *number, uint32_t bit_num)
 {
@@ -41,10 +42,26 @@ static uint64_t check_bit(uint64_t* number, uint32_t bit_num)
         return bit;
 }
 
+static void increment_count(uint64_t *buffer, uint32_t pin)
+{
+        buffer[pin] += 1;
+}
+
 static void increment_pin_hit(uint32_t pin)
 {
         assert(pin < PIN_COUNT);
-        hits[pin] += 1;
+        increment_count(hits, pin);
+}
+
+static void increment_pin_toggle(uint32_t pin)
+{
+        assert(pin < PIN_COUNT);
+        increment_count(toggles, pin);
+}
+
+static void reset_buffer_to_zero(uint64_t *buffer)
+{
+        for(int i = 0; i < PIN_COUNT - 1; i++) buffer[i] = 0; 
 }
 
 void pinMode(uint32_t pin, uint32_t mode)
@@ -55,6 +72,10 @@ void pinMode(uint32_t pin, uint32_t mode)
 void digitalWrite(uint32_t pin, uint32_t value)
 {
         assert(get_pinMode(pin) == OUT);
+        uint32_t current_pin_state = get_pinState(pin);
+        if (current_pin_state != value) {
+                increment_pin_toggle(pin);
+        }
         if (value == HIGH) {
                 set_bit(&pin_states, pin);
                 increment_pin_hit(pin);
@@ -99,5 +120,16 @@ uint32_t pin_hits(uint32_t pin)
 
 void reset_pin_hits()
 {
-        for(int i = 0; i < PIN_COUNT - 1; i++) hits[i] = 0; 
+        reset_buffer_to_zero(hits);
+}
+
+void reset_pin_toggles()
+{
+        reset_buffer_to_zero(toggles);
+}
+        
+uint32_t pin_toggles(uint32_t pin)
+{
+        assert(pin < PIN_COUNT);
+        return toggles[pin];
 }

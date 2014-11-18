@@ -15,7 +15,10 @@
  *
  * =====================================================================================
  */
-#include <stdlib.h>
+#include <stdint.h>
+#include <assert.h>
+
+#include "Pinout.h"
 #include "Spectrometer.h"
 #include "Stepper.h"
 #include "Shutter.h"
@@ -25,12 +28,14 @@
 #else      /* -----  not TEST  ----- */
 #include "Arduino.h"
 #endif     /* -----  not TEST  ----- */
-#include <stdint.h>
-#include <assert.h>
 
+
+// Command width in bits should be less than 32
+#define CMD_WIDTH 8
 
 void Spectrometer_init(void)
 {
+        pinMode(BUSY, OUT);
         Stepper_init();
         Shutter_init();
 }
@@ -39,4 +44,14 @@ void Spectrometer_init(void)
 uint32_t Spectrometer_parse(uint32_t cmd)
 {
         return (cmd & 0xF); 
+}
+
+void Spectrometer_busy_set()
+{
+        digitalWrite(BUSY, HIGH);
+}
+
+void Spectrometer_busy_clear()
+{
+        digitalWrite(BUSY, LOW);
 }

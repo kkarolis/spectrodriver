@@ -35,5 +35,7 @@ uint64_t states(void);
 void delayMicroseconds(uint32_t);
 void reset_pin_hits(void);
 uint32_t pin_hits(uint32_t pin);
+void reset_pin_toggles(void);
+uint32_t pin_toggles(uint32_t pin);
 
 #endif   /* ----- #ifndef FAKEARDUINO_INC  ----- */

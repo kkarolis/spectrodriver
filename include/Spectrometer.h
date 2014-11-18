@@ -17,13 +17,17 @@
  */
 #ifndef  SPECTROMETER_INC
 #define  SPECTROMETER_INC
-#include "Stepper.h"
+
 #include <stdint.h>
 
-// Command width in bits should be less than 32
-#define CMD_WIDTH 8
+#include "Pinout.h"
+#include "Stepper.h"
+#include "Shutter.h"
 
 void Spectrometer_init(void);
-uint32_t Spectrometer_parse(uint32_t cmd);
+uint32_t Spectrometer_parse(uint32_t);
+void Spectrometer_execute(uint32_t);
+void Spectrometer_busy_set(void);
+void Spectrometer_busy_clear(void);
 
 #endif   /* ----- #ifndef SPECTROMETER_INC  ----- */

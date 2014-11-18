@@ -3,7 +3,7 @@
  *
  *       Filename:  FakeArduino.c
  *
- *    Description:  Fake arduino implementation
+ *    Description:  Shutter implementation
  *
  *        Version:  1.0
  *        Created:  2014.10.28 18:29:47
@@ -16,6 +16,7 @@
  * =====================================================================================
  */
 #include <stdlib.h>
+#include "Pinout.h"
 #include "Shutter.h"
 
 #ifdef  TEST

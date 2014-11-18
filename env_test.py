@@ -5,7 +5,7 @@ Repository(['#./vendor/ceedling/vendor/unity/src'])
 
 CCCOM = '$CC -c $_CCCOMCOM $SOURCE -o $TARGET '
 CPPPATH = ['#./vendor/ceedling/vendor/unity/src', '#./include']
-CPPFLAGS = ['-std=c99', '-pedantic', '-Wall', '-DTEST']
+CPPFLAGS = ['-g', '-std=c99', '-pedantic', '-Wall', '-DTEST']
 UNITYHELPDIR = '#./vendor/ceedling/vendor/unity/auto'
 
 env_test = Environment()

@@ -26,6 +26,8 @@ void setUp(void)
  
 void tearDown(void)
 {
+        reset_pin_hits();
+        reset_pin_toggles();
 }
  
 void test_all_pins_are_input_by_default(void)
@@ -81,4 +83,28 @@ void test_able_to_check_pin_hit_count(void)
         digitalWrite(pin, LOW);
         uint32_t hits = pin_hits(pin);
         TEST_ASSERT_EQUAL(2, hits);
+}
+
+void test_able_to_check_pin_toggles(void) {
+        uint32_t pin = 13;
+        pinMode(pin, OUT);
+        digitalWrite(pin, LOW);
+        digitalWrite(pin, HIGH);
+        digitalWrite(pin, HIGH);
+        digitalWrite(pin, LOW);
+        uint32_t toggles = pin_toggles(pin);
+        TEST_ASSERT_EQUAL(2, toggles);
+
+}
+
+void test_able_to_reset_pin_toggles(void) {
+        uint32_t pin = 13;
+        pinMode(pin, OUT);
+        digitalWrite(pin, LOW);
+        digitalWrite(pin, HIGH);
+        digitalWrite(pin, HIGH);
+        digitalWrite(pin, LOW);
+        reset_pin_toggles();
+        uint32_t toggles = pin_toggles(pin);
+        TEST_ASSERT_EQUAL(0, toggles);
 }

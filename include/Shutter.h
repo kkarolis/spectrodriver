@@ -19,13 +19,14 @@
 #ifndef  SHUTTER_INC
 #define  SHUTTER_INC
 
+#include "Pinout.h"
+
 #ifdef  TEST
 #include "FakeArduino.h"
 #else      /* -----  not TEST  ----- */
 #include "Arduino.h"
 #endif     /* -----  not TEST  ----- */
 #include <stdint.h>
-#define SHUTTER 22
 
 void Shutter_init(void);
 void Shutter_open(void);
