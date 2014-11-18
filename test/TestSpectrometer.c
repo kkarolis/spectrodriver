@@ -32,9 +32,9 @@ void tearDown(void)
 void test_spectrometr_initializes_needed_pins_to_output(void) {
         Spectrometer_init();
         TEST_ASSERT_TRUE(get_pinMode(MS1) == OUT);
-        TEST_ASSERT_TRUE(get_pinState(MS1) == LOW);
+        TEST_ASSERT_TRUE(get_pinState(MS1) == HIGH);
         TEST_ASSERT_TRUE(get_pinMode(MS2) == OUT);
-        TEST_ASSERT_TRUE(get_pinState(MS2) == LOW);
+        TEST_ASSERT_TRUE(get_pinState(MS2) == HIGH);
         TEST_ASSERT_TRUE(get_pinMode(DIR) == OUT);
         TEST_ASSERT_TRUE(get_pinState(DIR) == LOW);
         TEST_ASSERT_TRUE(get_pinMode(STEP) == OUT);
