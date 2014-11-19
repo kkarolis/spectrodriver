@@ -18,6 +18,9 @@
 
 #ifndef  STEPPER_INC
 #define  STEPPER_INC
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 #include <stdint.h>
 #include "Pinout.h"
@@ -58,4 +61,7 @@ void Stepper_set_home(void);
 void Stepper_change_dir(int32_t);
 StepSize Stepper_step_size(void);
 
+#ifdef __cplusplus
+}
+#endif
 #endif   /* ----- #ifndef STEPPER_INC  ----- */

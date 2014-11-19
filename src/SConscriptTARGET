@@ -1,11 +1,23 @@
 # -*- coding: utf-8 -*-
 # vim: set filetype=python : #
+import os
+
 Import('env_target', 'core_variant_syscalls')
+
+def filtered_glob(env, pattern, blacklist=[],
+  ondisk=True, source=False, strings=False):
+    return filter(
+      lambda f: os.path.basename(f.path) not in blacklist,
+      env.Glob(pattern))
+
+env_target.AddMethod(filtered_glob, "FilteredGlob");
+file_blacklist = ['FakeArduino.c']
 
 MAIN_FILE = env_target['MAIN_FILE']
 main = env_target.File(MAIN_FILE)
 obj_main = env_target.Object(main)
-obj_src = env_target.Object(Glob('*.c'))
+obj_src = env_target.Object(env_target.FilteredGlob(
+    '*.c', blacklist=file_blacklist))
 elf_target = env_target.File('{}.elf'.format(MAIN_FILE.split('.')[0]))
 bin_target = env_target.File('{}.bin'.format(MAIN_FILE.split('.')[0]))
 
@@ -15,17 +27,6 @@ elf_main = env_target.Command(
     ('$CC $ELFFLAGS -Wl,-Map,${BUILD_MAP}.map -o $TARGET '
         '-Wl,--start-group $SOURCES $GCCRELDIR -Wl,--end-group'))
 
-# bin_builder = Builder(action = objrule,
-                      # suffix='.bin',
-                      # src_suffix='.elf')
-
-# elf_main = env_target.ELF('Blink.elf', main_cxx)
-# bin_main = env_target.BIN('Blink.bin', main_elf)
 bin_main = env_target.Command(bin_target, elf_main,
                               '$OBJCOPY $OBJCOPYFLAGS $SOURCE $TARGET')
-
-# Depends(main_bin, main_elf)
-# Depends(main_elf, [core, variant])
-# Depends(core, [core_c_files, core_cxx_files])
-# Depends(variant, core)
 Return('bin_main')

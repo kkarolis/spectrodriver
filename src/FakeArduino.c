@@ -61,7 +61,8 @@ static void increment_pin_toggle(uint32_t pin)
 
 static void reset_buffer_to_zero(uint64_t *buffer)
 {
-        for(int i = 0; i < PIN_COUNT - 1; i++) buffer[i] = 0; 
+        int i;
+        for(i = 0; i < PIN_COUNT - 1; i++) buffer[i] = 0; 
 }
 
 void pinMode(uint32_t pin, uint32_t mode)
@@ -71,7 +72,7 @@ void pinMode(uint32_t pin, uint32_t mode)
 
 void digitalWrite(uint32_t pin, uint32_t value)
 {
-        assert(get_pinMode(pin) == OUT);
+        assert(get_pinMode(pin) == OUTPUT);
         uint32_t current_pin_state = get_pinState(pin);
         if (current_pin_state != value) {
                 increment_pin_toggle(pin);
@@ -87,7 +88,7 @@ void digitalWrite(uint32_t pin, uint32_t value)
 uint32_t get_pinMode(uint32_t pin)
 {
         uint64_t bit = check_bit(&pin_modes, pin);
-        return ((bit == 0)? IN : OUT);
+        return ((bit == 0)? IN : OUTPUT);
 }
 
 uint32_t get_pinState(uint32_t pin)

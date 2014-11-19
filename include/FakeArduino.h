@@ -20,10 +20,10 @@
 
 #include <stdint.h>
 
-#define OUT 1
-#define IN 0
-#define HIGH 1 
-#define LOW 0
+#define OUTPUT 0x1
+#define IN 0x0
+#define HIGH 0x1 
+#define LOW 0x0
 #define PIN_COUNT 64
 
 void pinMode(uint32_t pin, uint32_t mode);

@@ -1,6 +1,24 @@
 /*
  * =====================================================================================
  *
+ *       Filename:  TestSpectrometer.c
+ *
+ *    Description:  j
+ *
+ *        Version:  1.0
+ *        Created:  2014.11.19 07:46:50
+ *       Revision:  none
+ *       Compiler:  gcc
+ *
+ *         Author:  Karolis Kalantojus (kkarolis), karolis.kalantojus@gmail.com
+ *   Organization:  Vilnius University
+ *
+ * =====================================================================================
+ */
+#include <stdlib.h>
+/*
+ * =====================================================================================
+ *
  *       Filename:  TestDelaySetFunction.c
  *
  *    Description:  Test the simple function
@@ -31,17 +49,17 @@ void tearDown(void)
  
 void test_spectrometr_initializes_needed_pins_to_output(void) {
         Spectrometer_init();
-        TEST_ASSERT_TRUE(get_pinMode(MS1) == OUT);
+        TEST_ASSERT_TRUE(get_pinMode(MS1) == OUTPUT);
         TEST_ASSERT_TRUE(get_pinState(MS1) == HIGH);
-        TEST_ASSERT_TRUE(get_pinMode(MS2) == OUT);
+        TEST_ASSERT_TRUE(get_pinMode(MS2) == OUTPUT);
         TEST_ASSERT_TRUE(get_pinState(MS2) == HIGH);
-        TEST_ASSERT_TRUE(get_pinMode(DIR) == OUT);
+        TEST_ASSERT_TRUE(get_pinMode(DIR) == OUTPUT);
         TEST_ASSERT_TRUE(get_pinState(DIR) == LOW);
-        TEST_ASSERT_TRUE(get_pinMode(STEP) == OUT);
+        TEST_ASSERT_TRUE(get_pinMode(STEP) == OUTPUT);
         TEST_ASSERT_TRUE(get_pinState(STEP) == LOW);
-        TEST_ASSERT_TRUE(get_pinMode(HOME) == OUT);
+        TEST_ASSERT_TRUE(get_pinMode(HOME) == OUTPUT);
         TEST_ASSERT_TRUE(get_pinState(HOME) == LOW);
-        TEST_ASSERT_TRUE(get_pinMode(BUSY) == OUT);
+        TEST_ASSERT_TRUE(get_pinMode(BUSY) == OUTPUT);
         TEST_ASSERT_TRUE(get_pinState(BUSY) == LOW);
 }
 

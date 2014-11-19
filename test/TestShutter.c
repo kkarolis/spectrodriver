@@ -32,7 +32,7 @@ void tearDown(void)
 void test_shutter_init_works(void)
 {
         Shutter_init();
-        TEST_ASSERT_EQUAL(get_pinMode(SHUTTER), OUT);
+        TEST_ASSERT_EQUAL(get_pinMode(SHUTTER), OUTPUT);
         TEST_ASSERT_EQUAL(get_pinState(SHUTTER), LOW);
 }
 

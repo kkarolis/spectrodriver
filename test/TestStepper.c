@@ -35,13 +35,13 @@ void tearDown(void)
 
 void test_stepper_initializes_pins_as_outputs(void)
 {
-        TEST_ASSERT_EQUAL(get_pinMode(MS1), OUT);
-        TEST_ASSERT_EQUAL(get_pinMode(MS2), OUT);
-        TEST_ASSERT_EQUAL(get_pinMode(DIR), OUT);
-        TEST_ASSERT_EQUAL(get_pinMode(STEP), OUT);
-        TEST_ASSERT_EQUAL(get_pinMode(RESET), OUT);
-        TEST_ASSERT_EQUAL(get_pinMode(HOME), OUT);
-        TEST_ASSERT_EQUAL(get_pinMode(ENABLE), OUT);
+        TEST_ASSERT_EQUAL(get_pinMode(MS1), OUTPUT);
+        TEST_ASSERT_EQUAL(get_pinMode(MS2), OUTPUT);
+        TEST_ASSERT_EQUAL(get_pinMode(DIR), OUTPUT);
+        TEST_ASSERT_EQUAL(get_pinMode(STEP), OUTPUT);
+        TEST_ASSERT_EQUAL(get_pinMode(RESET), OUTPUT);
+        TEST_ASSERT_EQUAL(get_pinMode(HOME), OUTPUT);
+        TEST_ASSERT_EQUAL(get_pinMode(ENABLE), OUTPUT);
 }
 
 void test_stepper_is_able_to_step(void)
@@ -55,7 +55,7 @@ void test_stepper_is_able_to_step(void)
 
 void test_stepper_is_able_to_step_multiple_steps(void)
 {
-        uint32_t steps = 12;
+        uint32_t steps = 3;
         Stepper_multistep(steps);
         TEST_ASSERT_EQUAL(steps, pin_hits(STEP));
 }
@@ -227,4 +227,29 @@ void test_stepper_is_able_to_change_dir_explicitly(void)
         TEST_ASSERT_EQUAL(BACKWARD, Stepper_dir());
         Stepper_change_dir(FORWARD);
         TEST_ASSERT_EQUAL(FORWARD, Stepper_dir());
+}
+
+
+void test_stepper_multisteps_correctly_at_lower_phase(void)
+{
+        /* Case where the phase is < 5 */
+        uint32_t steps = 30;
+        uint32_t cycle = 10000;
+        uint32_t i;
+        for(i = 0; i < cycle; i++) {
+                Stepper_multistep(steps);
+        }
+        TEST_ASSERT_EQUAL(steps*cycle, pin_hits(STEP));
+}
+
+
+void test_stepper_steps_correctly_with_small_number_of_steps(void)
+{
+        uint32_t steps = 2;
+        uint32_t cycle = 60;
+        uint32_t i;
+        for(i = 0; i < cycle; i++) {
+                Stepper_multistep(steps);
+        }
+        TEST_ASSERT_EQUAL(steps*cycle, pin_hits(STEP));
 }

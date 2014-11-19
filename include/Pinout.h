@@ -20,18 +20,18 @@
 #define  PINOUT_INC
 
 // Stepper related pins
-#define MS1 0
-#define MS2 1
-#define DIR 2
-#define STEP 3
-#define RESET 4
-#define HOME 5
-#define ENABLE 6
+#define MS1 31
+#define MS2 33
+#define DIR 35
+#define STEP 37
+#define RESET 39
+#define HOME 41
+#define ENABLE 43
 
 // Shutter related pins
-#define SHUTTER 22
+#define SHUTTER 45
 
 // Spectrometer related pins
-#define BUSY 25
+#define BUSY 47
 
 #endif   /* ----- #ifndef PINOUT_INC  ----- */

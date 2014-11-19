@@ -41,31 +41,31 @@ void test_all_pins_are_low_by_default(void)
 
 void test_can_set_individual_pin_modes(void)
 {
-        pinMode(4, OUT);
-        TEST_ASSERT_TRUE(get_pinMode(4) == OUT);
+        pinMode(4, OUTPUT);
+        TEST_ASSERT_TRUE(get_pinMode(4) == OUTPUT);
 }
 
 void test_can_set_individual_pin_states(void)
 {
-        pinMode(13, OUT);
+        pinMode(13, OUTPUT);
         digitalWrite(13, HIGH);
         TEST_ASSERT_TRUE(get_pinState(13) == HIGH);
 }
 
 void test_can_set_several_pin_modes(void)
 {
-        pinMode(4, OUT);
-        pinMode(13, OUT);
+        pinMode(4, OUTPUT);
+        pinMode(13, OUTPUT);
         pinMode(1, IN);
-        TEST_ASSERT_TRUE(get_pinMode(4) == OUT);
-        TEST_ASSERT_TRUE(get_pinMode(13) == OUT);
+        TEST_ASSERT_TRUE(get_pinMode(4) == OUTPUT);
+        TEST_ASSERT_TRUE(get_pinMode(13) == OUTPUT);
         TEST_ASSERT_TRUE(get_pinMode(1) == IN);
 }
 
 void test_able_to_reset_pin_hit_count(void)
 {
         uint32_t pin = 13;
-        pinMode(pin, OUT);
+        pinMode(pin, OUTPUT);
         digitalWrite(pin, HIGH);
         digitalWrite(pin, LOW);
         reset_pin_hits();
@@ -75,7 +75,7 @@ void test_able_to_reset_pin_hit_count(void)
 void test_able_to_check_pin_hit_count(void)
 {
         uint32_t pin = 13;
-        pinMode(pin, OUT);
+        pinMode(pin, OUTPUT);
         reset_pin_hits();
         digitalWrite(pin, HIGH);
         digitalWrite(pin, LOW);
@@ -87,7 +87,7 @@ void test_able_to_check_pin_hit_count(void)
 
 void test_able_to_check_pin_toggles(void) {
         uint32_t pin = 13;
-        pinMode(pin, OUT);
+        pinMode(pin, OUTPUT);
         digitalWrite(pin, LOW);
         digitalWrite(pin, HIGH);
         digitalWrite(pin, HIGH);
@@ -99,7 +99,7 @@ void test_able_to_check_pin_toggles(void) {
 
 void test_able_to_reset_pin_toggles(void) {
         uint32_t pin = 13;
-        pinMode(pin, OUT);
+        pinMode(pin, OUTPUT);
         digitalWrite(pin, LOW);
         digitalWrite(pin, HIGH);
         digitalWrite(pin, HIGH);

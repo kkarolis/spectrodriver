@@ -31,7 +31,7 @@ static uint32_t open = 0;
 
 void Shutter_init(void)
 {
-        pinMode(SHUTTER, OUT);
+        pinMode(SHUTTER, OUTPUT);
         digitalWrite(SHUTTER, LOW);
 }
 

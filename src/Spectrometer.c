@@ -35,7 +35,7 @@
 
 void Spectrometer_init(void)
 {
-        pinMode(BUSY, OUT);
+        pinMode(BUSY, OUTPUT);
         Stepper_init();
         Shutter_init();
 }

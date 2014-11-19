@@ -33,8 +33,8 @@ stty_rule = 'stty -F /dev/$ARDUINOPORT cs8 1200 hupcl'
 
 # TODO Expose flags to config file
 FLAGS_CC = [
-    '-g', '-Os', '-w', '-ffunction-sections', '-fdata-sections', '-nostdlib',
-    '--param', 'max-inline-insns-single=500', '-Dprintf=iprintf',
+    '-g', '-Os', '-w', '-ffunction-sections', '-fdata-sections',
+    '-nostdlib', '--param', 'max-inline-insns-single=500', '-Dprintf=iprintf',
     '-mcpu=cortex-m3', '-DF_CPU=84000000L', '-DARDUINO=158',
     '-DARDUINO_SAM_DUE', '-DARDUINO_ARCH_SAM', '-D__SAM3X8E__', '-mthumb',
     '-DUSB_VID=0x2341', '-DUSB_PID=0x003e', '-DUSBCON',

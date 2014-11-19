@@ -68,6 +68,7 @@ static void Phase_inc(int32_t step)
 
 static void i_Stepper_step()
 {
+        /* Base stepper function */
         digitalWrite(STEP, HIGH);
         delayMicroseconds(STEP_DELAY_US);
         digitalWrite(STEP, LOW);
@@ -77,17 +78,31 @@ static void i_Stepper_step()
 }
 
 
-static uint32_t calculate_small_steps()
+static uint32_t calculate_small_steps(uint32_t steps)
 {
         /* Find the interval where phase currently is and */
         /* return the number of EIGHTH steps which have to be */
         /* stepped in order to end up in position where step can be changed */
+        StepSize step_size_current = Stepper_step_size();
+        /* The number of steps is too small to make a sensible descicion,
+         * dont bother */
+        if (step_size_current*steps < 8) return steps;
+
         int32_t phase_current = Stepper_phase();
-        int32_t remainder = (phase_current - 5) % 8;
-        if (!remainder) {
-                return 0;
+        int32_t phase_diff = 0;
+        phase_diff = phase_current - 5;
+        /* Decide which interval */
+        uint32_t interval = 0;
+        if (phase_diff < 0) {
+                /* Interval (29, 5) */
+                interval = 3;
+        } else {
+                int32_t remainder = phase_diff % 8;
+                interval = (phase_diff - remainder)/8;
+                if (remainder == 0) {
+                        return 0;
+                }
         }
-        int32_t interval = (phase_current - remainder)/8;
         switch(interval) {
                 case 0: /* Interval (5,13) */
                         return (dir == 1)? (13 - phase_current):
@@ -138,30 +153,30 @@ uint32_t calculate_long_steps(uint32_t steps, uint32_t small_steps)
 static struct Routine calculate_routine(uint32_t steps)
 {
         struct Routine routine;
-        uint32_t small_steps = calculate_small_steps();
+        uint32_t small_steps = calculate_small_steps(steps);
         uint32_t long_steps = calculate_long_steps(steps, small_steps);
         routine.steps_first = small_steps;
         routine.steps_middle = long_steps;
-        routine.steps_last = (!small_steps)? 0: (8 - small_steps);
+        routine.steps_last = (!small_steps || !long_steps)? 0: (8 - small_steps);
         return routine;
 }
 
 
 void Stepper_init(void)
 {
-        pinMode(MS1, OUT);
+        pinMode(MS1, OUTPUT);
         digitalWrite(MS1, HIGH);
-        pinMode(MS2, OUT);
+        pinMode(MS2, OUTPUT);
         digitalWrite(MS2, HIGH);
-        pinMode(DIR, OUT);
+        pinMode(DIR, OUTPUT);
         digitalWrite(DIR, LOW);
-        pinMode(STEP, OUT);
+        pinMode(STEP, OUTPUT);
         digitalWrite(STEP, LOW);
-        pinMode(RESET, OUT);
+        pinMode(RESET, OUTPUT);
         digitalWrite(RESET, LOW);
-        pinMode(HOME, OUT);
+        pinMode(HOME, OUTPUT);
         digitalWrite(HOME, LOW);
-        pinMode(ENABLE, OUT);
+        pinMode(ENABLE, OUTPUT);
         digitalWrite(ENABLE, LOW);
         phase = 5;
         pos = 0;
@@ -187,11 +202,12 @@ void Stepper_multistep(uint32_t steps)
         StepSize step_size_small = EIGHTH;
         StepSize step_size_current = Stepper_step_size();
         Stepper_change_step(step_size_small);
-        for(uint32_t i = 0; i < routine.steps_first; i++) Stepper_step();
+        uint32_t i;
+        for(i = 0; i < routine.steps_first; i++) Stepper_step();
         Stepper_change_step(step_size_current);
-        for(uint32_t i = 0; i < routine.steps_middle; i++) Stepper_step();
+        for(i = 0; i < routine.steps_middle; i++) Stepper_step();
         Stepper_change_step(step_size_small);
-        for(uint32_t i = 0; i < routine.steps_last; i++) Stepper_step();
+        for(i = 0; i < routine.steps_last; i++) Stepper_step();
 }
 
 
